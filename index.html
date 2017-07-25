@@ -26,7 +26,7 @@
 <div class="container">
     <h1>Internal crowdfunding: Voting</h1><br/><br/>
     <div ng-if="!user">
-        <input class="form-control" hint="d/i-user" ng-model="userId.value">
+        <label>D/I-user: </label><input style="width:150px;" class="form-control" hint="d/i-user" ng-model="userId.value" maxlength="20"><br>
         <button class="btn btn-primary" ng-click="getUser();getIdeas();">Submit</button>
     </div>
 
@@ -51,6 +51,10 @@
         <div align="right">
         <button class="btn btn-primary" ng-disabled="disabled" ng-click="submit()">Submit</button>
         </div>
+    </div>
+
+    <div ng-if="success" class="alert alert-success">
+        <strong>Success!</strong>
     </div>
 </div>
 </body>

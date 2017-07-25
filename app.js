@@ -12,13 +12,11 @@ app.controller('MainController', function($scope, $http) {
         }
       });
 
-      console.log(JSON.stringify($scope.user))
-      $http.post(getUserUrl(), JSON.stringify($scope.user)).success(function() {
-        $scope.userId = "";
+      $http.put(getUserUrl(), JSON.stringify($scope.user), {headers: { "Content-Type": "application/json" }})
+      .success(function(res) {
+        $scope.user = "";
+        $scope.success = true;
       });
-
-      // kazva se na usera, 4e e gotov i se skriva tablicata
-
     }
 
     function getUserUrl() {
@@ -27,21 +25,18 @@ app.controller('MainController', function($scope, $http) {
 
     $scope.getUser = function() {
       var url = getUserUrl();
-      console.log(getUserUrl());
-      $http.get(url).success(function(data) {
-        $scope.user = JSON.parse(data);
+      console.log(url);
+      $http.get(url).success(function(res) {
+        $scope.user = res;
       }).error(function() {
-        $scope.user = JSON.parse('{ "type": "user", "investments": { "6b858172efca3c828ca20d0c04000fb1": 10 } }');
+        $scope.user = JSON.parse('{ "type": "user", "investments": { } }');
       })
     }
 
     $scope.getIdeas = function() {
       var url = 'https://croudfunding.cfapps.sap.hana.ondemand.com/ideas/_design/views/_view/allideas?group_level=1';
-      $http.get(url).success(function(data) {
-        $scope.ideas = fillUserInvestment(JSON.parse(data).rows);
-      }).error(function() {
-        $scope.ideas = fillUserInvestment(JSON.parse('{"rows":[{"key":"6b858172efca3c828ca20d0c04000fb1","value":{"_id":"6b858172efca3c828ca20d0c04000fb1","_rev":"2-1f608b92668662937e3e4e10ef515557","name":"Consistent UX across Tools - Cross-Tool Angular Library with reusable components based on UX guidelines","url":"https://sapjira.wdf.sap.corp/browse/TOOLSIDEAS-4","type":"idea","invested":70}},{"key":"6b858172efca3c828ca20d0c04001736","value":{"_id":"6b858172efca3c828ca20d0c04001736","_rev":"2-aa4bf9be779d81c753c3a4ef9c14a439","name":"Intelligent Customer Care","url":"https://sapjira.wdf.sap.corp/browse/TOOLSIDEAS-9","type":"idea","invested":0}}]}').rows);
-        // $scope.ideas = JSON.parse('{"rows":[{"key":"6b858172efca3c828ca20d0c04000fb1","value":{"_id":"6b858172efca3c828ca20d0c04000fb1","_rev":"2-1f608b92668662937e3e4e10ef515557","name":"Consistent UX across Tools - Cross-Tool Angular Library with reusable components based on UX guidelines","url":"https://sapjira.wdf.sap.corp/browse/TOOLSIDEAS-4","type":"idea","invested":70}},{"key":"6b858172efca3c828ca20d0c04001736","value":{"_id":"6b858172efca3c828ca20d0c04001736","_rev":"2-aa4bf9be779d81c753c3a4ef9c14a439","name":"Intelligent Customer Care","url":"https://sapjira.wdf.sap.corp/browse/TOOLSIDEAS-9","type":"idea","invested":0}}]}');
+      $http.get(url).success(function(res) {
+        $scope.ideas = fillUserInvestment(res.rows);
       });
     }
 
@@ -59,11 +54,12 @@ app.controller('MainController', function($scope, $http) {
     $scope.validate = function() {
       var sum = 0;
       $scope.ideas.forEach(function(idea) {
-        if (idea.userInvestment && idea.userInvestment > 0) {
-          sum += idea.userInvestment;
+        if (idea.userInvestment && parseInt(idea.userInvestment) > 0) {
+          sum += parseInt(idea.userInvestment);
         }
       });
       $scope.disabled = sum > 100;
+      $scope.success = false;
     }
 
 });
