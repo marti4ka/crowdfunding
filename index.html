@@ -25,25 +25,32 @@
 
 <div class="container">
     <h1>Internal crowdfunding: Voting</h1><br/><br/>
+    <div ng-if="!user">
+        <input class="form-control" hint="d/i-user" ng-model="userId.value">
+        <button class="btn btn-primary" ng-click="getUser();getIdeas();">Submit</button>
+    </div>
 
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Idea</th>
-            <th>Current budget</th>
-            <th>My budget</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="idea in ideas">
-            <td>{{idea.name}}</td>
-            <td>{{idea.curr}}</td>
-            <td><input class="form-control" value=0 id="idea.id"></td>
-        </tr>
-        </tbody>
-    </table>
-    <div align="right">
-      <button class="btn btn-primary" ng-click="submit()">Submit</button>
+    <div ng-if="user">
+        <h2>{{userId.value}}</h2> 
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Idea</th>
+                <th>Current budget</th>
+                <th>My budget</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="idea in ideas">
+                <td><a target="_blank" href="{{idea.value.url}}">{{idea.value.name}}</a></td> 
+                <td>{{idea.value.invested}}</td>
+                <td><input class="form-control" ng-model="idea.userInvestment" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-keyup="validate()"></td>  
+            </tr>
+            </tbody>
+        </table>
+        <div align="right">
+        <button class="btn btn-primary" ng-disabled="disabled" ng-click="submit()">Submit</button>
+        </div>
     </div>
 </div>
 </body>
