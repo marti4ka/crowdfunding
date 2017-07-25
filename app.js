@@ -10,4 +10,8 @@ app.controller('MainController', function($scope, $injector) {
       {name: 'aaaaa', curr: '123', my: 10}
     ];
 
+    $scope.submit = function() {
+      console.log('grrr')
+    }
+
 });
