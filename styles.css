@@ -1,0 +1,25 @@
+.btn-group {
+  width: 100%;
+  border-bottom: 1px solid lightgray;
+}
+
+.btn-group .btn {
+  border-radius: 0em;
+  border: 0;
+}
+
+.btn-group .btn.active {
+  box-shadow: none;
+  background: white;
+  border: 1px solid lightgray;
+  border-bottom: 0;
+  margin-bottom: -1px;
+}
+
+.table {
+  margin-top: 25px;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
+}
