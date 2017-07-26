@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular-route.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap-tpls.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.3/es6-shim.js"></script>
 
     <!-- load all application files here -->
     <script src="app.js"></script>
@@ -27,7 +28,7 @@
     <h1>Internal crowdfunding: Voting</h1><br/><br/>
     <div ng-if="!user">
         <label>D/I-user: </label><input style="width:150px;" class="form-control" hint="d/i-user" ng-model="userId.value" maxlength="20"><br>
-        <button class="btn btn-primary" ng-click="getUser();getIdeas();">Submit</button>
+        <button class="btn btn-primary" ng-click="getData()">Submit</button>
     </div>
 
     <div ng-if="user">
